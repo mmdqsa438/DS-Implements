@@ -1,18 +1,16 @@
 /*-----------------------------------------------------------------------
------------------------------------------------------------------------
-This is an educational implementation 
-of the stack data structure.
-By means of an array and usable 
-by a novice user, 
-without requiring knowledge of how the stack works.
+-------------------------------------------------------------------------
+This is an educational implementation of the "Stack" data structure,
+in Dr. Morteza Keshtkaran's Data Structures class - Shiraz University - Fall 2025
 
-This stack structure 
-is implemented with an array 
-and automatically attempts to allocate
-more space for the stack if space is low.
 
-It also halve the size if 
-more than three-quarters of the stack is unused.
+This stack can be used by a novice user,
+without the need for knowledge of how stacks work.
+
+This stack structure :
+1. implemented with an array
+2. automatically tries to allocate more space for the stack if space is low.
+3. halves the size of the stack, if more than three-quarters of it is unused.
 
 Good luck...
 
@@ -20,17 +18,19 @@ Good luck...
 #include <iostream>
 using namespace std;
 
+template< typename T >
 class myStack {
 
 private:
     
-    int cap    = 32 ,
-        *stack = new int[cap],
-        top    = 0;        // first free cell & size
+    int cap = 32 ,
+        top = 0  ;        // first free cell & size
+    
+    T *stack ;
     //........................................
-    bool reallocate( int * buffer,int size, int newcap ){
+    bool reallocate( T * buffer,int size, int newcap ){
         
-        int * tmp = new int[newcap];
+        T * tmp = new T[newcap];
         if( tmp == NULL ) return false ;
         
         for(int i=0; i<size; i++) tmp[i] = buffer[i];
@@ -44,6 +44,14 @@ private:
     
 public:
     
+    myStack( void ){
+        stack = new T[cap];
+    }
+
+    ~myStack( void ){
+        delete stack ;
+    }
+
     bool push( int value ){
         
         if ( top >= cap ){ 
@@ -80,6 +88,10 @@ public:
     bool empty(void){ return top>=1?false:true ; }
     void clear(void){ top=0; }
     //........................................
-    
 };
-//int main(){;}
+
+// int main(){
+    
+//     myStack<int> *st = new myStack<int>();
+//     delete st;
+// }
